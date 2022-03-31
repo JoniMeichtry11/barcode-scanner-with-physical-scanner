@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script>
+        var barcode = '';
+        var interval;
+        document.addEventListener('keydown', function(evt){
+            if(interval)
+                clearInterval(interval);
+            if(evt.code == 'Enter'){
+                if(barcode){
+                    handleBarcode(barcode);
+                    barcode = '';
+                    return;
+                }
+            }
+            if(evt.key != 'Shift')
+                barcode += evt.key;
+            interval = setInterval(() => barcode = '', 20);
+        });
+
+        function handleBarcode(scanned_barcode){
+            document.querySelector('#last_barcode').innerHTML = scanned_barcode;
+        }
+    </script>
+</head>
+<body>
+    <div class="d-flex flex-column align-items-center">
+        <h1>Un simple escaner de código de barras</h1>
+        <h4><strong>Tu código de barras es: </strong></h4>
+        <div id="last-barcode"></div>
+    </div>
+</body>
+</html>
